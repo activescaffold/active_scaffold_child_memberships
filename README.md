@@ -49,3 +49,6 @@ end
 
 Then you get a table, with all users in the group in the rows, and roles in the columns. Only the assigned roles are in the columns by default, and new column can be added with a select tag to pick a new role to assign to users:
 
+![image](https://github.com/user-attachments/assets/793b07bd-b7bf-4336-a319-b40136cdb5e8)
+
+
