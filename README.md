@@ -86,3 +86,35 @@ If new columns are not allowed, it can be disabled using `add_label: false`:
 ```ruby
     conf.columns[:roles].form_ui = :child_memberships, {add_label: false}
 ```
+
+## Overriding Helpers
+
+The helper `active_scaffold_child_memberships_helper` can be overrided to change the default columns rendered, instead of the assigned records only. For example to render all available roles:
+
+```ruby
+def active_scaffold_child_memberships_helper(column, row_records)
+  column.association.klass.all
+end
+```
+
+The helper can use model prefix too:
+
+```ruby
+def group_active_scaffold_child_memberships_helper(column, row_records)
+  column.association.klass.all
+end
+```
+
+To change the record selector for new columns, the helper `active_scaffold_child_memberships_new_column` can be overrided instead of using `:add_column_ui`. It supports model prefix too. The field should be rendered disabled, as it's a template to be cloned when the add column link is clicked:
+
+```ruby
+def active_scaffold_child_memberships_new_column(column, name, source_col, ui_options)
+  if column == :roles
+    select_tag name, options_from_collection_for_select(Role.allowed_for(current_login), :id, :name), id: nil, disabled: true
+  else
+    super
+  end
+end
+```
+
+Also, the available records can be changed with the usual methods, `options_for_association_conditions` and `association_klass_scoped`, they receive the source association of the has_many through association (`:roles` in the example), and an empty record of the through association.

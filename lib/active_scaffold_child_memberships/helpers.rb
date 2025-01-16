@@ -42,7 +42,6 @@ module ActiveScaffoldChildMemberships
 
     def active_scaffold_child_memberships_members(column, row_records)
       row_records.flat_map(&column.association.source_reflection.name).uniq
-      #column.association.klass.all
     end
 
     def active_scaffold_child_memberships_new_column(column, name, source_col, ui_options)
