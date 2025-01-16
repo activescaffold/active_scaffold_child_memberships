@@ -51,4 +51,38 @@ Then you get a table, with all users in the group in the rows, and roles in the 
 
 ![image](https://github.com/user-attachments/assets/793b07bd-b7bf-4336-a319-b40136cdb5e8)
 
+The form_ui used to select the record of the new columns can be changed, with options for the form_ui (or column's options), with the key `:add_column_ui`, for example to use RecordSelect:
 
+```ruby
+    conf.columns[:roles].form_ui = :child_memberships, {add_column_ui: :record_select}
+```
+
+If no form_ui is defined with `:add_column_ui`, it defaults to `:select`. If ui options must be passed to the form_ui, they can be added using an array with the form UI and the options hash:
+
+```ruby
+    conf.columns[:roles].form_ui = :child_memberships, {add_column_ui: [:select, {include_blank: 'Pick one'}]}
+```
+
+The method used for the label in the rows is defined with `:label_method`, defaults to `:to_label`. For example, to use `short_name` method of Role model:
+
+```ruby
+    conf.columns[:roles].form_ui = :child_memberships, {label_method: :short_name}
+```
+
+The method used for the label in the rows is defined with `:child_label_method`, defaults to `:to_label`. For example, to use `first_name` method of User model:
+
+```ruby
+    conf.columns[:roles].form_ui = :child_memberships, {child_label_method: :first_name}
+```
+
+The label of the link to add a new column uses `:add_label` translation key, in the `:active_scaffold` scope. It can be changed to a string, skipping the translation, or other symbol to use other translation key, in the `:active_scaffold` scope. The translation can use `%{model}` variable to display the name of the associated model.
+
+```ruby
+    conf.columns[:roles].form_ui = :child_memberships, {add_label: 'Add other role'}
+```
+
+If new columns are not allowed, it can be disabled using `add_label: false`:
+
+```ruby
+    conf.columns[:roles].form_ui = :child_memberships, {add_label: false}
+```
