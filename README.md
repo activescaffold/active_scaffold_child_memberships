@@ -89,7 +89,7 @@ If new columns are not allowed, it can be disabled using `add_label: false`:
 
 ## Overriding Helpers
 
-The helper `active_scaffold_child_memberships_helper` can be overrided to change the default columns rendered, instead of the assigned records only. For example to render all available roles:
+The helper `active_scaffold_child_memberships_members` can be overrided to change the default columns rendered, instead of the assigned records only. For example to render all available roles:
 
 ```ruby
 def active_scaffold_child_memberships_helper(column, row_records)
@@ -118,3 +118,15 @@ end
 ```
 
 Also, the available records can be changed with the usual methods, `options_for_association_conditions` and `association_klass_scoped`, they receive the source association of the has_many through association (`:roles` in the example), and an empty record of the through association.
+
+To change how checkboxes are rendered, for example, adding extra content, the helper `active_scaffold_child_memberships_checkbox` can be overrided. It supports model prefix too. The argument child is the record of the row, and member is the record of the column.
+
+```ruby
+def active_scaffold_child_memberships_checkbox(column, source_column, child, member, name:, value:)
+  if column == :roles
+    safe_join [super, content_tag(:span, member.state_for(child))] 
+  else
+    super
+  end
+end
+```

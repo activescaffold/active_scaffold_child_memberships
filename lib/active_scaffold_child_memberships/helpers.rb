@@ -15,9 +15,11 @@ module ActiveScaffoldChildMemberships
       end
       header.unshift content_tag(:th, through_col.label)
 
+      checkbox_helper = override_helper_per_model(:active_scaffold_child_membership_checkbox, column.active_record_class)
       rows = children.map do |record|
+        checkbox_name = "#{options[:name]}[memberships][#{record.id}][]"
         columns = column_records.map.with_index do |member, i|
-          content_tag(:td, check_box_tag("#{options[:name]}[memberships][#{record.id}][]", i, record.send(source_col.name).include?(member), id: nil))
+          content_tag(:td, send(checkbox_helper, column, source_col, record, member, name: checkbox_name, value: i))
         end
         label = record.send(ui_options[:child_label_method] || :to_label)
         columns.unshift content_tag(:td, h(label))
@@ -42,6 +44,10 @@ module ActiveScaffoldChildMemberships
 
     def active_scaffold_child_memberships_members(column, row_records)
       row_records.flat_map(&column.association.source_reflection.name).uniq
+    end
+
+    def active_scaffold_child_membership_checkbox(column, source_column, child, member, name:, value:)
+      check_box_tag(name, value, child.send(source_column.name).include?(member), id: nil)
     end
 
     def active_scaffold_child_memberships_new_column(column, name, source_col, ui_options)
