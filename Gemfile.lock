@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    active_scaffold_child_memberships (0.1.1)
+    active_scaffold_child_memberships (0.1.2)
       active_scaffold (>= 4.0.0)
 
 GEM
