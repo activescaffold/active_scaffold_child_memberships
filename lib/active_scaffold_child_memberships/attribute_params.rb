@@ -1,11 +1,11 @@
 module ActiveScaffoldChildMemberships
   module AttributeParams
     protected
-    def update_column_association(parent_record, column, attribute, value, avoid_changes = false)
+    def update_column_association(parent_record, column, attribute, value, ...)
       if column.form_ui == :child_memberships
         source_col = active_scaffold_config_for(column.association.through_reflection.klass).columns[column.association.source_reflection.name]
         value.each do |child, members|
-          update_column_association(child, source_col, attribute, members, avoid_changes)
+          update_column_association(child, source_col, attribute, members, ...)
         end
       else
         super
