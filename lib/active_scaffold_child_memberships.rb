@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_scaffold_child_memberships/engine'
 require 'active_scaffold_child_memberships/version'
 

@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module ActiveScaffoldChildMemberships
   class Engine < ::Rails::Engine
     initializer 'active_scaffold_kanban.action_view' do
       ActiveSupport.on_load :action_view do
-        ActionView::Base.send :include, ActiveScaffoldChildMemberships::Helpers
+        ActiveSupport.on_load(:action_view) { include ActiveScaffoldChildMemberships::Helpers }
       end
     end
 
