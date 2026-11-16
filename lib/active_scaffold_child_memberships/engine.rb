@@ -2,13 +2,13 @@
 
 module ActiveScaffoldChildMemberships
   class Engine < ::Rails::Engine
-    initializer 'active_scaffold_kanban.action_view' do
+    initializer 'active_scaffold_child_memberships.action_view' do
       ActiveSupport.on_load :action_view do
         ActiveSupport.on_load(:action_view) { include ActiveScaffoldChildMemberships::Helpers }
       end
     end
 
-    initializer 'active_scaffold_kanban.controller' do
+    initializer 'active_scaffold_child_memberships.controller' do
       ActiveScaffold::AttributeParams.prepend(ActiveScaffoldChildMemberships::AttributeParams)
     end
   end

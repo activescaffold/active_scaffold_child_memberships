@@ -73,6 +73,10 @@ class HelpersTest < Minitest::Test
       "record-select:#{options[:name]}:#{options[:js]}:#{ui_options[:prompt]}"
     end
 
+    def active_scaffold_input_autocomplete(_column, options, ui_options:)
+      "autocomplete:#{options[:name]}:#{ui_options[:prompt]}"
+    end
+
     def as_(key, model:)
       "#{key}:#{model}"
     end
@@ -241,6 +245,19 @@ class HelpersTest < Minitest::Test
     assert_includes html, 'record-select:record[members][]:false:Search'
   end
 
+  def test_new_column_dispatches_custom_form_ui
+    source_column = SourceColumn.new(:member, Class.new, nil)
+
+    html = @helper.active_scaffold_child_memberships_new_column(
+      Column.new,
+      'record[members][]',
+      source_column,
+      {add_column_ui: [:autocomplete, {prompt: 'Find'}]}
+    )
+
+    assert_includes html, 'autocomplete:record[members][]:Find'
+  end
+
   def test_caption_has_empty_member_marker_and_can_hide_add_controls
     html = @helper.send(
       :child_memberships_caption,
@@ -257,5 +274,25 @@ class HelpersTest < Minitest::Test
 
   def test_literal_add_label_is_returned_unchanged
     assert_equal 'Add member', @helper.send(:child_memberships_add_label, 'Add member', SourceColumn.new)
+  end
+
+  def test_symbolic_add_label_builds_add_controls_for_the_source_model
+    model = Class.new do
+      def self.model_name
+        Struct.new(:human).new('Member')
+      end
+    end
+    source_column = SourceColumn.new(:member, model, SourceAssociation.new(:habtm, model))
+
+    add_column, new_column = @helper.send(
+      :child_memberships_add_controls,
+      Column.new(Object),
+      source_column,
+      'record',
+      {add_label: :add_column, add_column_ui: [nil, {prompt: 'Choose'}]}
+    )
+
+    assert_includes add_column, 'add_column:Member'
+    assert_includes new_column, 'singular:record[members][]:Choose'
   end
 end
