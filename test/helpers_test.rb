@@ -169,7 +169,7 @@ class HelpersTest < Minitest::Test
     assert_includes html, 'name="members[]"'
     assert_includes html, 'value="3"'
     assert_includes html, 'checked="checked"'
-    refute_includes html, 'id='
+    assert_not_includes html, 'id='
   end
 
   def test_association_must_be_a_has_many_through
@@ -252,7 +252,7 @@ class HelpersTest < Minitest::Test
     )
 
     assert_includes html, 'name="record[children][members][]"'
-    refute_includes html, '<a'
+    assert_not_includes html, '<a'
   end
 
   def test_literal_add_label_is_returned_unchanged
