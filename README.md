@@ -1,5 +1,12 @@
 # ChildMemberships Form UI for ActiveScaffold
 
+[![Build status](https://github.com/activescaffold/active_scaffold_child_memberships/actions/workflows/ci.yml/badge.svg)](https://github.com/activescaffold/active_scaffold_child_memberships/actions/workflows/ci.yml)
+[![Maintainability](https://qlty.sh/gh/activescaffold/projects/active_scaffold_child_memberships/maintainability.svg)](https://qlty.sh/gh/activescaffold/projects/active_scaffold_child_memberships)
+[![Code Coverage](https://qlty.sh/gh/activescaffold/projects/active_scaffold_child_memberships/coverage.svg)](https://qlty.sh/gh/activescaffold/projects/active_scaffold_child_memberships)
+[![Gem Version](https://badge.fury.io/rb/active_scaffold_child_memberships.svg)](https://badge.fury.io/rb/active_scaffold_child_memberships)
+[![Inline docs](https://inch-ci.org/github/activescaffold/active_scaffold_child_memberships.svg?branch=main)](https://inch-ci.org/github/activescaffold/active_scaffold_child_memberships)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 An addon for ActiveScaffold adding :child_memberships form_ui.
 
 It requires ActiveScaffold 4.0, and RecordSelect 4.0.2 if want to use :recordselect to add new columns.
